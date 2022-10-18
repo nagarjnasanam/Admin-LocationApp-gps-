@@ -57,7 +57,7 @@ export default defineComponent({
     //     formState.data=getData
     // })
     //   formState.loader=true
-    getLocation
+    // getLocation
 
       window.setInterval(() => {
         
