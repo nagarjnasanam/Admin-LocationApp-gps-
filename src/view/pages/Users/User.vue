@@ -17,6 +17,7 @@
             <tr class="heading">
               <th>Object Id</th>
               <th>username</th>
+              <th>Sharing</th>
               
             </tr>
           </thead>
@@ -24,6 +25,7 @@
             <tr v-for="id in filterData" :key="id" @click="move_to_edit(id)">
               <td>{{ id.id }}</td>
               <td>{{ id.username }}</td>
+              <td>{{id.sharing}}</td>
             
             </tr>
           </tbody>
@@ -112,6 +114,7 @@ export default defineComponent({
             lastName: object.get("lastName"),
             emailVarified: object.get("emailVarified"),
             username: object.get("username"),
+            sharing:object.get("state"),
             createdAt: moment(object.get("createdAt")).format(
               "MMMM Do YYYY,  HH:mm "
             ),

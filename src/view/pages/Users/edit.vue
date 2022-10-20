@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>Admin User</p>
+    <h1>{{formState.state ? "Sharing Location ................." : "Stopped Location............"}}</h1>
     <GoogleMap
       v-if="formState.loader"
       api-key="AIzaSyABPywZVGnAsgP8llgiBFnx8sAvUUiRyv4"
@@ -39,7 +40,8 @@ export default defineComponent({
         geodesic: true,
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeWeight: 2,
+        state:null
       }
     });
 
@@ -67,6 +69,8 @@ export default defineComponent({
   const getLocation =async ()=>{
     formState.loader=false
     await User.getPointer(router.params.id).then((obj)=>{
+        var state = obj.get("state")
+        formState.state = state
         console.log(obj)
         var getData = obj.get('userLocation')
         line.flightPath.path=getData
