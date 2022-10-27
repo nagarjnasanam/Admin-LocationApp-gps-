@@ -68,8 +68,9 @@ export default defineComponent({
       }, 5000); //number of milliseconds
   })
   const getLocation =async ()=>{
-    formState.loader=false
     await User.getPointer(router.params.id).then((obj)=>{
+    formState.loader=false
+
       formState.showMap=true
         var state = obj.get("state")
         formState.state = state
@@ -80,10 +81,11 @@ export default defineComponent({
         var len = getData.length
         console.log("len",len)
         formState.center=getData[len-1]
+      formState.loader=true
+
         console.log(formState.center)
         formState.data=getData
     })
-      formState.loader=true
   }
 
     return {
