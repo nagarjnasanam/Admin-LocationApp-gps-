@@ -3,14 +3,14 @@
     <p>Admin User</p>
     <h1>{{formState.state ? "Sharing Location ................." : "Stopped Location............"}}</h1>
     <GoogleMap
-      v-if="formState.loader"
+      v-if="formState.showMap"
       api-key="AIzaSyABPywZVGnAsgP8llgiBFnx8sAvUUiRyv4"
       style="width: 100%; height: 500px"
       :center="formState.center"
       :zoom="25"
     >
-      <Polyline :options="line.flightPath" />
-      <Marker :options="{ position: formState.center }" />
+      <Polyline v-if="formState.loader" :options="line.flightPath" />
+      <Marker v-if="formState.loader" :options="{ position: formState.center }" />
     </GoogleMap>
 
   </div>
@@ -31,6 +31,7 @@ export default defineComponent({
     const router = useRoute();
     const formState = reactive({
       id: router.params.id,
+      showMap:false,
       data:[],
       center: { lat: 40.689247, lng: -74.044502 },loader: false,
     });
@@ -41,7 +42,7 @@ export default defineComponent({
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 2,
-        state:null
+        state:null,
       }
     });
 
@@ -69,6 +70,7 @@ export default defineComponent({
   const getLocation =async ()=>{
     formState.loader=false
     await User.getPointer(router.params.id).then((obj)=>{
+      formState.showMap=true
         var state = obj.get("state")
         formState.state = state
         console.log(obj)
